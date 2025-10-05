@@ -4,9 +4,9 @@ layout: Page
 ---
 
 # Image Recognizer
-Can classify 20 famous artists based on their artworks </br>
+Can classify 20 famous artists based on their artworks <br/>
 
-Artist names: </br>
+Artist names: <br/>
 1. Caravaggio
 2. Claude Monet
 3. Diego Rivera
