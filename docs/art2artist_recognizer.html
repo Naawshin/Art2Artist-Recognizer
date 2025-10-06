@@ -1,0 +1,53 @@
+---
+title: Art2Artist Recognizer
+layout: page
+---
+
+<input id="photo" type="file">
+<div id="preview" style="margin: 20px 0;"></div>
+<div id="results"></div>
+
+<script type="module">
+    import { client } from "https://cdn.jsdelivr.net/npm/@gradio/client@0.5.0/dist/index.min.js";
+    
+    photo.addEventListener('change', function() {
+        const preview = document.getElementById('preview');
+        const results = document.getElementById('results');
+        
+        if (photo.files[0]) {
+            results.innerHTML = '';
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.innerHTML = `<img src="${e.target.result}" width="500" style="border: 1px solid #ccc; padding: 10px;">`;
+            };
+            reader.readAsDataURL(photo.files[0]);
+        }
+    });
+
+    async function loaded(reader) {  
+        const results = document.getElementById('results');
+        results.innerHTML = 'Classifying...';
+            
+        const app = await client("https://goldphish2209-art2artist-recognizer.hf.space/--replicas/m3t88/");
+        const result = await app.predict(1, [reader.result]);
+            
+        if (result.data && result.data[0]) {
+            const prediction = result.data[0];
+            const artist = prediction.confidences[0].label.replace("'s artwork", "");
+                
+            results.innerHTML = `<h3>🎨 ${artist}</h3>`;
+        }
+        
+    
+    }
+
+    function read() {
+        if (photo.files[0]) {
+            const reader = new FileReader();
+            reader.addEventListener('load', () => loaded(reader));
+            reader.readAsDataURL(photo.files[0]);
+        }
+    }
+    
+    photo.addEventListener('change', read);
+</script>

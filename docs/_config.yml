@@ -1,0 +1,10 @@
+remote theme: daattali/beautiful-jekyll@master
+plugins: 
+- jekyll-remote-theme
+
+title: Art2Artist Recognizer
+description: An image classification API that classifies 20 famous artists' artworks
+
+author:
+  name: Nowshin Tabasum
+  
