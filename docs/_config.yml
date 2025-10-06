@@ -1,10 +1,32 @@
-remote theme: daattali/beautiful-jekyll@master
+remote_theme: daattali/beautiful-jekyll@master
 plugins: 
-- jekyll-remote-theme
+  - jekyll-remote-theme
 
+# Site info
 title: Art2Artist Recognizer
 description: An image classification API that classifies 20 famous artists' artworks
+url: "https://naawshin.github.io"  #GitHub Pages URL
+baseurl: "/Art2Artist-Recognizer"  #repository name
 
+# Author info
 author:
   name: Nowshin Tabasum
+  email: "nawshintabassum88@gmail.com"
+  github: naawshin
+
   
+
+# Social media links (appear in footer)
+github: naawshin
+email: "nawshintabassum88@gmail.com"
+
+# Navigation (appears in header)
+navbar-links:
+  About Me: "aboutme"
+  GitHub: "https://github.com/naawshin"
+
+# Footer extra info
+footer-extra: "Art2Artist Recognizer - Classifying artworks with AI"
+
+# Appearance
+theme-color: "auto"  # or any color like "#267CB9"
