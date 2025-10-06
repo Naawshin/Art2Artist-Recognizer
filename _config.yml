@@ -23,5 +23,14 @@ navbar-links:
   About Me: "/aboutme/"
   GitHub: "https://github.com/naawshin"
 
+share-links-active:
+  twitter: true
+  facebook: true
+  linkedin: true
+  reddit: false
+
+
+
+
 # Appearance
 theme-color: "auto" 
