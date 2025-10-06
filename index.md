@@ -1,7 +1,6 @@
 ---
 title: Home
 layout: page
-page-img: "/assets/img/bgimg.jpg"
 ---
 
 # Image Recognizer
