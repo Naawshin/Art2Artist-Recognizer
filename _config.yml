@@ -19,7 +19,7 @@ author:
 # Navigation bar
 navbar-links:
   Home: "/"
-  Art2Artist App: "/art2artist_recognizer/"
+  Art2Artist App: "/art2artist_recognizer.html"
   About Me: "/aboutme/"
   GitHub: "https://github.com/naawshin"
 
