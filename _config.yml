@@ -14,7 +14,7 @@ author:
   email: "nawshintabassum88@gmail.com"
   github: naawshin
 
-  
+page-img: "/assets/img/bgimg.jpg"
 
 # Navigation bar
 navbar-links:
@@ -22,14 +22,6 @@ navbar-links:
   Art2Artist App: "/art2artist_recognizer.html"
   About Me: "/aboutme/"
   GitHub: "https://github.com/naawshin"
-
-share-links-active:
-  twitter: true
-  facebook: true
-  linkedin: true
-  reddit: false
-
-
 
 
 # Appearance
