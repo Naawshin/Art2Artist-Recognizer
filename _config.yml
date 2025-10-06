@@ -16,17 +16,11 @@ author:
 
   
 
-# Social media links (appear in footer)
-github: naawshin
-email: "nawshintabassum88@gmail.com"
-
-# Navigation (appears in header)
+# Navigation bar
 navbar-links:
   About Me: "aboutme"
   GitHub: "https://github.com/naawshin"
 
-# Footer extra info
-footer-extra: "Art2Artist Recognizer - Classifying artworks with AI"
 
 # Appearance
-theme-color: "auto"  # or any color like "#267CB9"
+theme-color: "auto" 

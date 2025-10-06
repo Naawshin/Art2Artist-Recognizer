@@ -4,7 +4,7 @@ layout: page
 ---
 
 # Image Recognizer
-Can classify 20 famous artists based on their artworks <br/>
+This API can classify 20 famous artists based on their artworks. <br/>
 
 Artist names: <br/>
 1. Caravaggio
