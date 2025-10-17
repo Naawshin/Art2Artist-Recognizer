@@ -19,55 +19,60 @@ body {
 }
 
 .main-content {
-    padding-top: 2rem;
+    padding-top: 1rem;
+    max-width: 1400px !important;
 }
 
-/* Hero Section */
+.container {
+    max-width: 1400px !important;
+}
+
+/* Hero Section - Compact */
 .hero-section {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.95) 100%);
-    padding: 3rem 2.5rem;
+    padding: 2.5rem 3rem;
     border-radius: 20px;
-    margin: 2rem 0;
+    margin: 1.5rem 0;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .hero-section h1 {
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-weight: 800;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 1rem;
-    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    line-height: 1.1;
 }
 
 .hero-section .subtitle {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: #444;
-    margin-bottom: 2rem;
+    margin-bottom: 1.2rem;
     font-weight: 400;
 }
 
 .hero-section .description {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #555;
-    max-width: 700px;
-    margin: 0 auto 2rem;
-    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
 }
 
 /* CTA Button */
 .cta-button {
     display: inline-block;
-    padding: 18px 45px;
+    padding: 15px 40px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white !important;
     text-decoration: none;
     border-radius: 50px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     transition: all 0.3s ease;
     box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
@@ -85,82 +90,79 @@ body {
 .cta-button:before {
     content: "🎨";
     margin-right: 10px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
-/* Features Section */
-.features-section {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(252, 252, 252, 0.92) 100%);
-    padding: 2.5rem;
+/* Stats Section - More Compact */
+.stats-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem 2.5rem;
     border-radius: 20px;
-    margin: 2rem 0;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    margin: 1.5rem 0;
+    text-align: center;
+    color: white;
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
 }
 
-.feature-card {
-    background: rgba(255, 255, 255, 0.98);
-    padding: 2rem;
-    border-radius: 15px;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border-left: 4px solid transparent;
+.stats-section h2 {
+    margin-bottom: 1.2rem;
+    font-size: 1.8rem;
 }
 
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 1.5rem;
 }
 
-.feature-card.purple { border-left-color: #667eea; }
-.feature-card.pink { border-left-color: #f093fb; }
-.feature-card.orange { border-left-color: #fa709a; }
+.stat-item {
+    text-align: center;
+}
 
-.feature-icon {
+.stat-number {
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-weight: 800;
     display: block;
+    margin-bottom: 0.3rem;
 }
 
-.feature-card h3 {
-    color: #2c3e50;
-    font-size: 1.5rem;
-    margin-bottom: 0.8rem;
-    font-weight: 700;
+.stat-label {
+    font-size: 0.95rem;
+    opacity: 0.95;
+    font-weight: 300;
 }
 
-.feature-card p {
-    color: #555;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin: 0;
-}
-
-/* Artists Section */
+/* Artists Section - Full Width Grid */
 .artists-section {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.92) 100%);
-    padding: 2.5rem;
+    padding: 2rem 2.5rem;
     border-radius: 20px;
-    margin: 2rem 0;
+    margin: 1.5rem 0;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
 
 .artists-section h2 {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 800;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
+.artists-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+}
+
 .artist-category {
     background: rgba(255, 255, 255, 0.98);
-    padding: 1.8rem;
+    padding: 1.5rem;
     border-radius: 15px;
-    margin-bottom: 1.5rem;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
 }
@@ -171,18 +173,12 @@ body {
 }
 
 .artist-category h3 {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    margin-bottom: 1.2rem;
-    padding-bottom: 0.8rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
     border-bottom: 3px solid;
-    display: flex;
-    align-items: center;
-}
-
-.artist-category h3 span {
-    margin-right: 10px;
-    font-size: 1.8rem;
+    text-align: center;
 }
 
 .artist-category.expression h3 { 
@@ -206,80 +202,76 @@ body {
     list-style: none;
     padding-left: 0;
     margin: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
 }
 
 .artist-category li {
-    padding: 0.6rem 0.8rem;
+    padding: 0.4rem 0.5rem;
     position: relative;
-    padding-left: 2rem;
+    padding-left: 1.5rem;
     color: #333;
-    font-size: 1rem;
+    font-size: 0.95rem;
     transition: all 0.2s ease;
-    border-radius: 8px;
+    border-radius: 6px;
 }
 
 .artist-category li:hover {
     background: rgba(102, 126, 234, 0.1);
-    padding-left: 2.5rem;
+    padding-left: 1.8rem;
 }
 
 .artist-category li:before {
     content: "✦";
     position: absolute;
-    left: 0.5rem;
+    left: 0.3rem;
     color: #667eea;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
-/* Stats Section */
-.stats-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 2.5rem;
+/* Bottom CTA - More Compact */
+.bottom-cta {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.95) 100%);
+    padding: 2rem 3rem;
     border-radius: 20px;
-    margin: 2rem 0;
+    margin: 1.5rem 0;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     text-align: center;
-    color: white;
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+.bottom-cta h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    color: #2c3e50;
 }
 
-.stat-item {
-    text-align: center;
-}
-
-.stat-number {
-    font-size: 3rem;
-    font-weight: 800;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
+.bottom-cta p {
+    color: #555;
+    margin-bottom: 1.5rem;
     font-size: 1rem;
-    opacity: 0.95;
-    font-weight: 300;
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+    .artists-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .hero-section h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
     
     .hero-section .subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
-    .artist-category ul {
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+    
+    .artists-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -295,7 +287,7 @@ body {
 </div>
 
 <div class="stats-section">
-    <h2 style="margin-bottom: 1.5rem; font-size: 2rem;">Trained on Thousands of Masterpieces</h2>
+    <h2>Trained on Thousands of Masterpieces</h2>
     <div class="stats-grid">
         <div class="stat-item">
             <span class="stat-number">20</span>
@@ -303,7 +295,7 @@ body {
         </div>
         <div class="stat-item">
             <span class="stat-number">16000+</span>
-            <span class="stat-label">Years of Art</span>
+            <span class="stat-label">Artworks</span>
         </div>
         <div class="stat-item">
             <span class="stat-number">AI</span>
@@ -315,64 +307,55 @@ body {
 <div class="artists-section">
     <h2>Supported Artists</h2>
     
-    <div class="row">
-
-        <div class="col-md-6">
-            <div class="artist-category classical">
-                <ul>
-                    <li>Leonardo da Vinci</li>
-                    <li>Michelangelo</li>
-                    <li>Raphael</li>
-                    <li>Caravaggio</li>
-                    <li>Rembrandt van Rijn</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="artist-category expression">
-                <ul>
-                    <li>Edvard Munch</li>
-                    <li>Vincent van Gogh</li>
-                    <li>Gustav Klimt</li>
-                    <li>Jackson Pollock</li>
-                    <li>Mark Rothko</li>
-                    
-                </ul>
-            </div>
-        </div>
-            
-    </div>
-    
-    <div class="row">
-        <div class="col-md-6">
-            <div class="artist-category impressionist">
-                <ul>
-                    <li>Joan Miró</li>
-                    <li>Salvador Dalí</li>
-                    <li>Claude Monet</li>
-                    <li>Edgar Degas</li>
-                    <li>Pierre-Auguste Renoir</li>
-                    
-                </ul>
-            </div>
+    <div class="artists-grid">
+        <div class="artist-category classical">
+            <h3>🏛️ Classical</h3>
+            <ul>
+                <li>Leonardo da Vinci</li>
+                <li>Michelangelo</li>
+                <li>Raphael</li>
+                <li>Caravaggio</li>
+                <li>Rembrandt van Rijn</li>
+            </ul>
         </div>
         
-        <div class="col-md-6">
-            <div class="artist-category global">
-                <ul>
-                    <li>Paul Cézanne</li>
-                    <li>Frida Kahlo</li>
-                    <li>Diego Rivera</li>
-                    <li>Henri Matisse</li>
-                    <li>Pablo Picasso</li>
-                </ul>
-            </div>
+        <div class="artist-category expression">
+            <h3>🎭 Expression</h3>
+            <ul>
+                <li>Edvard Munch</li>
+                <li>Vincent van Gogh</li>
+                <li>Gustav Klimt</li>
+                <li>Jackson Pollock</li>
+                <li>Mark Rothko</li>
+            </ul>
+        </div>
+        
+        <div class="artist-category impressionist">
+            <h3>🌅 Impressionist</h3>
+            <ul>
+                <li>Joan Miró</li>
+                <li>Salvador Dalí</li>
+                <li>Claude Monet</li>
+                <li>Edgar Degas</li>
+                <li>Pierre-Auguste Renoir</li>
+            </ul>
+        </div>
+        
+        <div class="artist-category global">
+            <h3>🌎 Global</h3>
+            <ul>
+                <li>Paul Cézanne</li>
+                <li>Frida Kahlo</li>
+                <li>Diego Rivera</li>
+                <li>Henri Matisse</li>
+                <li>Pablo Picasso</li>
+            </ul>
         </div>
     </div>
 </div>
 
-<div class="hero-section" style="margin-top: 3rem;">
-    <h2 style="font-size: 2rem; margin-bottom: 1rem;">Ready to Explore Art History?</h2>
-    <p style="color: #555; margin-bottom: 2rem;">Start identifying masterpieces with our AI-powered recognition system</p>
+<div class="bottom-cta">
+    <h2>Ready to Explore Art History?</h2>
+    <p>Start identifying masterpieces with our AI-powered recognition system</p>
     <a href="{{ '/art2artist_recognizer' | relative_url }}" class="cta-button">Launch the App</a>
 </div>
