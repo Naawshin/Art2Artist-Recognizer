@@ -20,14 +20,18 @@ body {
 
 .main-content {
     padding-top: 1rem;
-    max-width: 1400px !important;
+    max-width: 100% !important;
+    width: 100%;
 }
 
 .container {
-    max-width: 1400px !important;
+    max-width: 100% !important;
+    width: 100%;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
 }
 
-/* Hero Section - Compact */
+/* Hero Section - Full Width */
 .hero-section {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.95) 100%);
     padding: 2.5rem 3rem;
@@ -93,7 +97,7 @@ body {
     font-size: 1.2rem;
 }
 
-/* Stats Section - More Compact */
+/* Stats Section */
 .stats-section {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 2rem 2.5rem;
@@ -133,7 +137,7 @@ body {
     font-weight: 300;
 }
 
-/* Artists Section - Full Width Grid */
+/* Artists Section - Expanded Grid */
 .artists-section {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.92) 100%);
     padding: 2rem 2.5rem;
@@ -156,7 +160,7 @@ body {
 .artists-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.2rem;
+    gap: 1.5rem;
 }
 
 .artist-category {
@@ -227,7 +231,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* Bottom CTA - More Compact */
+/* Bottom CTA */
 .bottom-cta {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.95) 100%);
     padding: 2rem 3rem;
@@ -251,7 +255,19 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 1400px) {
+    .artists-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
 @media (max-width: 1200px) {
+    .artists-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
     .artists-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -273,6 +289,11 @@ body {
     
     .artists-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .main-content {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
     }
 }
 </style>
