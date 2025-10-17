@@ -21,6 +21,7 @@ header-mask: rgba(0, 0, 0, 0.5)  # Adds dark overlay for better text readability
 </style>
 
 <div class="hero-content">
+
 # 🎨 Art2Artist Recognizer
 
 **AI-Powered Art Classification**
@@ -28,11 +29,13 @@ header-mask: rgba(0, 0, 0, 0.5)  # Adds dark overlay for better text readability
 Upload any artwork image and discover which famous artist created it! Our deep learning model analyzes artistic styles across 20 legendary artists.
 
 [Try the Art2Artist App](/art2artist_recognizer.html){: .btn .btn-primary .btn-lg}
+
 </div>
 
 ---
 
 <div class="artist-section">
+
 ## 🖼️ Supported Artists
 
 <div class="row">
@@ -80,4 +83,5 @@ Upload any artwork image and discover which famous artist created it! Our deep l
 
 </div>
 </div>
+
 </div>
