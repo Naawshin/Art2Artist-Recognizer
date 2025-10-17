@@ -1,29 +1,83 @@
 ---
 title: Home
 layout: page
+header-img: "/assets/img/art-background.jpg"
+header-mask: rgba(0, 0, 0, 0.5)  # Adds dark overlay for better text readability
 ---
 
-# Image Recognizer
-This API can classify 20 famous artists based on their artworks. <br/>
+<style>
+.hero-content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 10px;
+    margin: 2rem 0;
+}
+.artist-section {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+</style>
 
-Artist names: <br/>
-1. Caravaggio
-2. Claude Monet
-3. Diego Rivera
-4. Edgar Degas
-5. Edvard Munch
-6. Frida Kahlo
-7. Gustav Klimt
-8. Henri Matisse
-9. Jackson Pollock
-10. Joan Miró
-11. Leonardo da Vinci
-12. Mark Rothko
-13. Michelangelo
-14. Pablo Picasso
-15. Paul Cézanne
-16. Pierre-Auguste
-17. Raphael
-18. Rembrandt van Rijn
-19. Salvador Dalí
-20. Vincent van Gogh
+<div class="hero-content">
+# 🎨 Art2Artist Recognizer
+
+**AI-Powered Art Classification**
+
+Upload any artwork image and discover which famous artist created it! Our deep learning model analyzes artistic styles across 20 legendary artists.
+
+[Try the Art2Artist App](/art2artist_recognizer.html){: .btn .btn-primary .btn-lg}
+</div>
+
+---
+
+<div class="artist-section">
+## 🖼️ Supported Artists
+
+<div class="row">
+<div class="col-md-6">
+
+### 🎭 Expression & Modern
+- Edvard Munch
+- Vincent van Gogh  
+- Gustav Klimt
+- Jackson Pollock
+- Mark Rothko
+- Joan Miró
+- Salvador Dalí
+
+</div>
+<div class="col-md-6">
+
+### 🏛️ Classical & Renaissance
+- Leonardo da Vinci
+- Michelangelo
+- Raphael
+- Caravaggio
+- Rembrandt van Rijn
+
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-6">
+
+### 🌅 Impressionists
+- Claude Monet
+- Edgar Degas
+- Pierre-Auguste Renoir
+- Paul Cézanne
+
+</div>
+<div class="col-md-6">
+
+### 🌎 Global Artists
+- Frida Kahlo
+- Diego Rivera
+- Henri Matisse
+- Pablo Picasso
+
+</div>
+</div>
+</div>
