@@ -1,53 +1,404 @@
 ---
-title: Art2Artist Recognizer
-layout: page
+title: Art2Artist Recognizer App
+layout: default
 ---
 
-<input id="photo" type="file">
-<div id="preview" style="margin: 20px 0;"></div>
-<div id="results"></div>
+<style>
+    .app-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+    }
+
+    .app-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .app-header h1 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+    }
+
+    .app-header p {
+        font-size: 1.1rem;
+        color: #666;
+    }
+
+    .upload-section {
+        background: linear-gradient(135deg, #f5f9ff 0%, #f0f4ff 100%);
+        border: 2px dashed #667eea;
+        border-radius: 20px;
+        padding: 3rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .upload-section:hover {
+        background: linear-gradient(135deg, #eef2ff 0%, #e8ecff 100%);
+        border-color: #764ba2;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
+    }
+
+    .upload-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .upload-section h2 {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .upload-section p {
+        color: #666;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    #photo {
+        display: none;
+    }
+
+    .file-input-label {
+        display: inline-block;
+        padding: 12px 40px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 50px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .file-input-label:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    }
+
+    .preview-section {
+        display: none;
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .preview-section.active {
+        display: block;
+    }
+
+    .preview-section h3 {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    #preview img {
+        max-width: 100%;
+        max-height: 400px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .results-section {
+        display: none;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 3rem;
+        text-align: center;
+        color: white;
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+    }
+
+    .results-section.active {
+        display: block;
+    }
+
+    .results-section h2 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        font-weight: 900;
+    }
+
+    .artist-name {
+        font-size: 2.8rem;
+        font-weight: 900;
+        margin: 1rem 0;
+        letter-spacing: -0.5px;
+    }
+
+    .confidence-label {
+        font-size: 1rem;
+        opacity: 0.95;
+        margin-top: 1rem;
+    }
+
+    .confidence-bar {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        height: 8px;
+        margin: 1rem 0 0.5rem 0;
+        overflow: hidden;
+    }
+
+    .confidence-fill {
+        background: rgba(255, 255, 255, 0.95);
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.5s ease;
+    }
+
+    .confidence-percentage {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-top: 0.5rem;
+    }
+
+    .loading-spinner {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(102, 126, 234, 0.2);
+        border-top-color: #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .loading-section {
+        display: none;
+        text-align: center;
+        padding: 2rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .loading-section.active {
+        display: block;
+    }
+
+    .loading-section p {
+        font-size: 1.1rem;
+        color: #666;
+        margin-top: 1rem;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+        background: white;
+        color: #667eea;
+        border: 2px solid #667eea;
+    }
+
+    .btn-secondary:hover {
+        background: #f5f9ff;
+    }
+
+    @media (max-width: 768px) {
+        .app-container {
+            padding: 2rem 1rem;
+        }
+
+        .app-header h1 {
+            font-size: 2rem;
+        }
+
+        .upload-section {
+            padding: 2rem 1rem;
+        }
+
+        .upload-icon {
+            font-size: 2.5rem;
+        }
+
+        .artist-name {
+            font-size: 2rem;
+        }
+
+        .results-section {
+            padding: 2rem 1.5rem;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="app-container">
+    <div class="app-header">
+        <h1>🎨 Upload Your Artwork</h1>
+        <p>Discover which legendary artist created this masterpiece</p>
+    </div>
+
+    <div class="upload-section" id="uploadArea">
+        <div class="upload-icon">📤</div>
+        <h2>Choose an Image</h2>
+        <p>Click the button below or drag & drop an artwork image</p>
+        <label class="file-input-label" for="photo">Browse Files</label>
+        <input id="photo" type="file" accept="image/*">
+    </div>
+
+    <div class="loading-section" id="loadingSection">
+        <div class="loading-spinner"></div>
+        <p>Analyzing artwork...</p>
+    </div>
+
+    <div class="preview-section" id="previewSection">
+        <h3>Selected Image</h3>
+        <div id="preview"></div>
+    </div>
+
+    <div class="results-section" id="resultsSection">
+        <h2>Recognized Artist</h2>
+        <div class="artist-name" id="artistName"></div>
+        <div class="confidence-bar">
+            <div class="confidence-fill" id="confidenceFill"></div>
+        </div>
+        <div class="confidence-label">
+            Confidence: <span class="confidence-percentage" id="confidencePercentage">0%</span>
+        </div>
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="uploadAnother()">Try Another Image</button>
+        </div>
+    </div>
+</div>
 
 <script type="module">
     import { client } from "https://cdn.jsdelivr.net/npm/@gradio/client@0.5.0/dist/index.min.js";
     
-    photo.addEventListener('change', function() {
-        const preview = document.getElementById('preview');
-        const results = document.getElementById('results');
+    const photoInput = document.getElementById('photo');
+    const preview = document.getElementById('preview');
+    const previewSection = document.getElementById('previewSection');
+    const loadingSection = document.getElementById('loadingSection');
+    const resultsSection = document.getElementById('resultsSection');
+    const uploadArea = document.getElementById('uploadArea');
+
+    function showSection(section) {
+        previewSection.classList.remove('active');
+        loadingSection.classList.remove('active');
+        resultsSection.classList.remove('active');
+        uploadArea.style.display = 'block';
         
-        if (photo.files[0]) {
-            results.innerHTML = '';
+        if (section === 'preview') {
+            previewSection.classList.add('active');
+        } else if (section === 'loading') {
+            loadingSection.classList.add('active');
+            uploadArea.style.display = 'none';
+        } else if (section === 'results') {
+            resultsSection.classList.add('active');
+            uploadArea.style.display = 'none';
+        }
+    }
+
+    window.uploadAnother = function() {
+        photoInput.value = '';
+        preview.innerHTML = '';
+        showSection('upload');
+    };
+
+    photoInput.addEventListener('change', function() {
+        if (photoInput.files[0]) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                preview.innerHTML = `<img src="${e.target.result}" width="500" style="border: 1px solid #ccc; padding: 10px;">`;
+                preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                showSection('preview');
+                classifyImage(e.target.result);
             };
-            reader.readAsDataURL(photo.files[0]);
+            reader.readAsDataURL(photoInput.files[0]);
         }
     });
 
-    async function loaded(reader) {  
-        const results = document.getElementById('results');
-        results.innerHTML = 'Classifying...';
-            
-        const app = await client("https://goldphish2209-art2artist-recognizer.hf.space/--replicas/m3t88/");
-        const result = await app.predict(1, [reader.result]);
-            
-        if (result.data && result.data[0]) {
-            const prediction = result.data[0];
-            const artist = prediction.confidences[0].label.replace("'s artwork", "");
-                
-            results.innerHTML = `<h3>🎨 ${artist}</h3>`;
-        }
+    async function classifyImage(imageData) {
+        showSection('loading');
         
-    
+        try {
+            const app = await client("https://goldphish2209-art2artist-recognizer.hf.space/--replicas/m3t88/");
+            const result = await app.predict(1, [imageData]);
+            
+            if (result.data && result.data[0]) {
+                const prediction = result.data[0];
+                const artistData = prediction.confidences[0];
+                const artistName = artistData.label.replace("'s artwork", "");
+                const confidence = Math.round(artistData.confidence * 100);
+                
+                document.getElementById('artistName').textContent = artistName;
+                document.getElementById('confidencePercentage').textContent = confidence + '%';
+                document.getElementById('confidenceFill').style.width = confidence + '%';
+                
+                showSection('results');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            loadingSection.innerHTML += '<p style="color: red; margin-top: 1rem;">Error classifying image. Please try again.</p>';
+        }
     }
 
-    function read() {
-        if (photo.files[0]) {
-            const reader = new FileReader();
-            reader.addEventListener('load', () => loaded(reader));
-            reader.readAsDataURL(photo.files[0]);
+    // Drag and drop support
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.style.background = 'linear-gradient(135deg, #eef2ff 0%, #e8ecff 100%)';
+        uploadArea.style.borderColor = '#764ba2';
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.background = 'linear-gradient(135deg, #f5f9ff 0%, #f0f4ff 100%)';
+        uploadArea.style.borderColor = '#667eea';
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.style.background = 'linear-gradient(135deg, #f5f9ff 0%, #f0f4ff 100%)';
+        uploadArea.style.borderColor = '#667eea';
+        
+        if (e.dataTransfer.files[0]) {
+            photoInput.files = e.dataTransfer.files;
+            photoInput.dispatchEvent(new Event('change'));
         }
-    }
-    
-    photo.addEventListener('change', read);
+    });
 </script>
