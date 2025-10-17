@@ -1,6 +1,3 @@
-remote_theme: daattali/beautiful-jekyll@master
-plugins: 
-  - jekyll-remote-theme
 
 # Site info
 title: Art2Artist Recognizer
