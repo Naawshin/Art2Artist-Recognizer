@@ -5,8 +5,8 @@ plugins:
 # Site info
 title: Art2Artist Recognizer
 description: An image classification API that classifies 20 famous artists' artworks
-url: "https://naawshin.github.io"  #GitHub Pages URL
-baseurl: "/Art2Artist-Recognizer"  #repository name
+url: "https://naawshin.github.io"
+baseurl: "/Art2Artist-Recognizer"
 
 # Author info
 author:
@@ -14,15 +14,12 @@ author:
   email: "nawshintabassum88@gmail.com"
   github: naawshin
 
-page-img: "/assets/img/bgimg.jpg"
-
 # Navigation bar
 navbar-links:
-  Home: "/"
-  Art2Artist App: "/art2artist_recognizer.html"
-  About Me: "/aboutme/"
+  Home: ""
+  Art2Artist App: "art2artist_recognizer"
+  About Me: "aboutme"
   GitHub: "https://github.com/naawshin"
 
-
 # Appearance
-theme-color: "auto" 
+theme-color: "auto"
