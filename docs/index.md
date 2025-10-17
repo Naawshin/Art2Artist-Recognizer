@@ -1,7 +1,7 @@
 ---
 title: Home
 layout: page
-header-img: "/assets/img/art-background.jpg"
+header-img: "/assets/img/art-background.png"
 header-mask: rgba(0, 0, 0, 0.5)  # Adds dark overlay for better text readability
 ---
 
