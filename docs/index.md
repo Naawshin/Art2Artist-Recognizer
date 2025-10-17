@@ -6,20 +6,45 @@ cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
 ---
 
 <style>
+/* Full Page Background */
+body {
+    background-image: url('/Art2Artist-Recognizer/assets/img/art-background.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: -1;
+}
+
+.main-content {
+    position: relative;
+    z-index: 1;
+}
+
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.95) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.92) 100%);
     padding: 3rem 2.5rem;
     border-radius: 20px;
     margin: 2rem 0;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(15px);
 }
 
 .hero-section h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 800;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
@@ -27,21 +52,24 @@ cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
     background-clip: text;
     margin-bottom: 1rem;
     line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 .hero-section .subtitle {
-    font-size: 1.3rem;
-    color: #555;
+    font-size: 1.4rem;
+    color: #444;
     margin-bottom: 2rem;
-    font-weight: 300;
+    font-weight: 400;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
 }
 
 .hero-section .description {
     font-size: 1.1rem;
-    color: #666;
+    color: #555;
     max-width: 700px;
     margin: 0 auto 2rem;
     line-height: 1.8;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
 }
 
 /* CTA Button */
@@ -55,14 +83,14 @@ cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
     font-size: 1.2rem;
     font-weight: 700;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
     position: relative;
     overflow: hidden;
 }
 
 .cta-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
     color: white !important;
     text-decoration: none;
 }
@@ -75,26 +103,29 @@ cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
 
 /* Features Section */
 .features-section {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(252, 252, 252, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(252, 252, 252, 0.88) 100%);
     padding: 2.5rem;
     border-radius: 20px;
     margin: 2rem 0;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
 }
 
 .feature-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 2rem;
     border-radius: 15px;
     margin-bottom: 1.5rem;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     border-left: 4px solid transparent;
+    backdrop-filter: blur(5px);
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.98);
 }
 
 .feature-card.purple { border-left-color: #667eea; }
@@ -115,7 +146,7 @@ cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
 }
 
 .feature-card p {
-    color: #666;
+    color: #555;
     font-size: 1rem;
     line-height: 1.6;
     margin: 0;
@@ -123,11 +154,12 @@ cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
 
 /* Artists Section */
 .artists-section {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 249, 250, 0.88) 100%);
     padding: 2.5rem;
     border-radius: 20px;
     margin: 2rem 0;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
 }
 
 .artists-section h2 {
@@ -142,17 +174,19 @@ cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
 }
 
 .artist-category {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     padding: 1.8rem;
     border-radius: 15px;
     margin-bottom: 1.5rem;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
 }
 
 .artist-category:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.98);
 }
 
 .artist-category h3 {
@@ -200,14 +234,14 @@ cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
     padding: 0.6rem 0.8rem;
     position: relative;
     padding-left: 2rem;
-    color: #444;
+    color: #333;
     font-size: 1rem;
     transition: all 0.2s ease;
     border-radius: 8px;
 }
 
 .artist-category li:hover {
-    background: rgba(102, 126, 234, 0.05);
+    background: rgba(102, 126, 234, 0.1);
     padding-left: 2.5rem;
 }
 
@@ -227,7 +261,7 @@ cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
     margin: 2rem 0;
     text-align: center;
     color: white;
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
 }
 
 .stats-grid {
@@ -250,14 +284,14 @@ cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
 
 .stat-label {
     font-size: 1rem;
-    opacity: 0.9;
+    opacity: 0.95;
     font-weight: 300;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .hero-section h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
     
     .hero-section .subtitle {
@@ -385,6 +419,6 @@ cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
 
 <div class="hero-section" style="margin-top: 3rem;">
     <h2 style="font-size: 2rem; margin-bottom: 1rem;">Ready to Explore Art History?</h2>
-    <p style="color: #666; margin-bottom: 2rem;">Start identifying masterpieces with our AI-powered recognition system</p>
+    <p style="color: #555; margin-bottom: 2rem;">Start identifying masterpieces with our AI-powered recognition system</p>
     <a href="{{ '/art2artist_recognizer' | relative_url }}" class="cta-button">Launch the App</a>
 </div>
