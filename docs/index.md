@@ -1,46 +1,36 @@
 ---
 layout: page
-title: Art2Artist Recognizer
-subtitle: Discover the Artist Behind Every Masterpiece
-cover-img: /Art2Artist-Recognizer/assets/img/art-background.png
 ---
 
 <style>
-/* Full Page Background */
-body {
-    background-image: url('/Art2Artist-Recognizer/assets/img/art-background.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
+/* Remove page header */
+.intro-header {
+    display: none !important;
 }
 
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.85);
-    z-index: -1;
+.page-heading {
+    display: none !important;
+}
+
+/* Full Page Background */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
 }
 
 .main-content {
-    position: relative;
-    z-index: 1;
+    padding-top: 2rem;
 }
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.92) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.95) 100%);
     padding: 3rem 2.5rem;
     border-radius: 20px;
     margin: 2rem 0;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .hero-section h1 {
@@ -52,7 +42,6 @@ body::before {
     background-clip: text;
     margin-bottom: 1rem;
     line-height: 1.2;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 .hero-section .subtitle {
@@ -60,7 +49,6 @@ body::before {
     color: #444;
     margin-bottom: 2rem;
     font-weight: 400;
-    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
 }
 
 .hero-section .description {
@@ -69,7 +57,6 @@ body::before {
     max-width: 700px;
     margin: 0 auto 2rem;
     line-height: 1.8;
-    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
 }
 
 /* CTA Button */
@@ -103,29 +90,26 @@ body::before {
 
 /* Features Section */
 .features-section {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(252, 252, 252, 0.88) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(252, 252, 252, 0.92) 100%);
     padding: 2.5rem;
     border-radius: 20px;
     margin: 2rem 0;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
 
 .feature-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     padding: 2rem;
     border-radius: 15px;
     margin-bottom: 1.5rem;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     border-left: 4px solid transparent;
-    backdrop-filter: blur(5px);
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    background: rgba(255, 255, 255, 0.98);
 }
 
 .feature-card.purple { border-left-color: #667eea; }
@@ -154,12 +138,11 @@ body::before {
 
 /* Artists Section */
 .artists-section {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 249, 250, 0.88) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.92) 100%);
     padding: 2.5rem;
     border-radius: 20px;
     margin: 2rem 0;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
 
 .artists-section h2 {
@@ -174,19 +157,17 @@ body::before {
 }
 
 .artist-category {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     padding: 1.8rem;
     border-radius: 15px;
     margin-bottom: 1.5rem;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
 }
 
 .artist-category:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .artist-category h3 {
@@ -308,7 +289,7 @@ body::before {
     <h1>🎨 Art2Artist Recognizer</h1>
     <div class="subtitle">Powered by Deep Learning AI</div>
     <div class="description">
-        Upload any artwork image and instantly discover which legendary artist created it. Our advanced neural network analyzes artistic styles, brushstrokes, and compositions across 20 iconic masters of art history.
+        Upload any artwork image and instantly discover which legendary artist created it. This model analyzes artistic styles, brushstrokes, and compositions across 20 iconic masters of art history.
     </div>
     <a href="{{ '/art2artist_recognizer' | relative_url }}" class="cta-button">Start Recognizing Art</a>
 </div>
@@ -321,7 +302,7 @@ body::before {
             <span class="stat-label">Famous Artists</span>
         </div>
         <div class="stat-item">
-            <span class="stat-number">500+</span>
+            <span class="stat-number">16000+</span>
             <span class="stat-label">Years of Art</span>
         </div>
         <div class="stat-item">
@@ -331,54 +312,13 @@ body::before {
     </div>
 </div>
 
-<div class="features-section">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="feature-card purple">
-                <span class="feature-icon">🤖</span>
-                <h3>AI-Powered Recognition</h3>
-                <p>Our deep learning model has been trained on thousands of artworks to accurately identify artistic styles and techniques.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature-card pink">
-                <span class="feature-icon">⚡</span>
-                <h3>Instant Results</h3>
-                <p>Upload your image and get immediate classification results with confidence scores for each artist.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="feature-card orange">
-                <span class="feature-icon">🎭</span>
-                <h3>20 Legendary Artists</h3>
-                <p>From Renaissance masters to modern expressionists, covering 500+ years of art history.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="artists-section">
-    <h2>🖼️ Supported Artists</h2>
+    <h2>Supported Artists</h2>
     
     <div class="row">
-        <div class="col-md-6">
-            <div class="artist-category expression">
-                <h3><span>🎭</span> Expression & Modern</h3>
-                <ul>
-                    <li>Edvard Munch</li>
-                    <li>Vincent van Gogh</li>
-                    <li>Gustav Klimt</li>
-                    <li>Jackson Pollock</li>
-                    <li>Mark Rothko</li>
-                    <li>Joan Miró</li>
-                    <li>Salvador Dalí</li>
-                </ul>
-            </div>
-        </div>
-        
+
         <div class="col-md-6">
             <div class="artist-category classical">
-                <h3><span>🏛️</span> Classical & Renaissance</h3>
                 <ul>
                     <li>Leonardo da Vinci</li>
                     <li>Michelangelo</li>
@@ -388,25 +328,39 @@ body::before {
                 </ul>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="artist-category expression">
+                <ul>
+                    <li>Edvard Munch</li>
+                    <li>Vincent van Gogh</li>
+                    <li>Gustav Klimt</li>
+                    <li>Jackson Pollock</li>
+                    <li>Mark Rothko</li>
+                    
+                </ul>
+            </div>
+        </div>
+            
     </div>
     
     <div class="row">
         <div class="col-md-6">
             <div class="artist-category impressionist">
-                <h3><span>🌅</span> Impressionists</h3>
                 <ul>
+                    <li>Joan Miró</li>
+                    <li>Salvador Dalí</li>
                     <li>Claude Monet</li>
                     <li>Edgar Degas</li>
                     <li>Pierre-Auguste Renoir</li>
-                    <li>Paul Cézanne</li>
+                    
                 </ul>
             </div>
         </div>
         
         <div class="col-md-6">
             <div class="artist-category global">
-                <h3><span>🌎</span> Global Masters</h3>
                 <ul>
+                    <li>Paul Cézanne</li>
                     <li>Frida Kahlo</li>
                     <li>Diego Rivera</li>
                     <li>Henri Matisse</li>
