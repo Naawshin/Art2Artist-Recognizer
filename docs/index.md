@@ -5,7 +5,6 @@ title: Art2Artist Recognizer
 
 <div class="hero-section">
     <h1>🎨 Art2Artist Recognizer</h1>
-    <div class="subtitle">Powered by Deep Learning AI</div>
     <div class="description">
         Upload any artwork image and instantly discover which legendary artist created it. This model analyzes artistic styles, brushstrokes, and compositions across 20 iconic masters of art history.
     </div>
@@ -81,7 +80,7 @@ title: Art2Artist Recognizer
 </div>
 
 <div class="bottom-cta">
-    <h2>Ready to Explore Art History?</h2>
-    <p>Start identifying masterpieces with our AI-powered recognition system</p>
+    <h2>Ready to Investigate?</h2>
+    <p>Start identifying the master behind the masterpieces with AI-powered artist recognition system</p>
     <a href="{{ site.baseurl }}/art2artist_recognizer" class="cta-button">Launch the App</a>
 </div>
