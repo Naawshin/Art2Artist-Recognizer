@@ -3,7 +3,7 @@ layout: page
 ---
 
 <style>
-/* Remove page header */
+/* Override Beautiful Jekyll defaults - CRITICAL */
 .intro-header {
     display: none !important;
 }
@@ -12,31 +12,41 @@ layout: page
     display: none !important;
 }
 
-/* Full Page Background */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    min-height: 100vh;
+html, body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+    min-height: 100vh !important;
+}
+
+main {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
 }
 
 .main-content {
-    padding-top: 1rem;
     max-width: 100% !important;
-    width: 100%;
+    width: 100% !important;
+    padding: 1rem 0 !important;
+    margin: 0 !important;
 }
 
 .container {
     max-width: 100% !important;
-    width: 100%;
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
+    width: 100% !important;
+    padding: 0 2rem !important;
 }
 
-/* Hero Section - Full Width */
+.container-md, .container-lg {
+    max-width: 100% !important;
+}
+
+/* Hero Section */
 .hero-section {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.95) 100%);
     padding: 2.5rem 3rem;
     border-radius: 20px;
-    margin: 1.5rem 0;
+    margin: 1.5rem auto;
+    max-width: 1200px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -102,7 +112,8 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 2rem 2.5rem;
     border-radius: 20px;
-    margin: 1.5rem 0;
+    margin: 1.5rem auto;
+    max-width: 1200px;
     text-align: center;
     color: white;
     box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
@@ -137,12 +148,13 @@ body {
     font-weight: 300;
 }
 
-/* Artists Section - Expanded Grid */
+/* Artists Section */
 .artists-section {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.92) 100%);
     padding: 2rem 2.5rem;
     border-radius: 20px;
-    margin: 1.5rem 0;
+    margin: 1.5rem auto;
+    max-width: 1400px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }
 
@@ -236,7 +248,8 @@ body {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.95) 100%);
     padding: 2rem 3rem;
     border-radius: 20px;
-    margin: 1.5rem 0;
+    margin: 1.5rem auto;
+    max-width: 1200px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -255,12 +268,6 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 1400px) {
-    .artists-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
 @media (max-width: 1200px) {
     .artists-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -283,7 +290,7 @@ body {
     }
     
     .stats-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
     
@@ -291,9 +298,8 @@ body {
         grid-template-columns: 1fr;
     }
     
-    .main-content {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
+    .hero-section, .stats-section, .artists-section, .bottom-cta {
+        margin: 1rem 0.5rem !important;
     }
 }
 </style>
