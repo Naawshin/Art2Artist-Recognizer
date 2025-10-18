@@ -9,7 +9,7 @@ python_version: 3.12.10
 app_file: app.py
 pinned: false
 license: apache-2.0
-short_description: art2artist-recognizer is a deep learning model designed to c
+short_description: art2artist-recognizer is a deep learning model designed to classify 20 artists based on their artworks
 ---
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference <br/>

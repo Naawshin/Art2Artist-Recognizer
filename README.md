@@ -1,5 +1,5 @@
 # Art2Artist-Recognizer
-An image classification model from data collections, cleaning, model training, deployment, and API integration. <br/>
+An end to end image classifier covering data collections, cleaning, model training, deployment, and API integration. <br/>
 It can classify 20 famous artists based on their artworks. <br/>
 The artists are: <br/>
 1. Caravaggio
@@ -24,14 +24,27 @@ The artists are: <br/>
 20. Vincent van Gogh
 
 # Dataset Preparation
-**Data Collection:** Downloaded from DuckDuckGo using term name and [kaggle WikiArt dataset](https://www.kaggle.com/datasets/steubk/wikiart). <br/>
+**Data Collection:** Downloaded from DuckDuckGo using term name and [kaggle WikiArt dataset](https://www.kaggle.com/datasets/steubk/wikiart). 
+- Original dataset size: ~20,000 images  
+- After cleaning: ~16,000 high-quality images <br/>
 **DataLoader:** Used fastai DataBlock API to set up the DataLoader. <br/>
-**Data Augmentation:** fastai provides default data augmentation which operates in GPU. <br/>
+**Data Augmentation:** fastai provides default data augmentation which operates in GPU which includes Random resized crops (min_scale=0.5), multiple augmentations with 2.0 multiplier. <br/>
 Details can be found in `notebooks/data_prep.ipynb`
 
 # Training and Data Cleaning
-**Training:** Fine-tuned a resnet34 model for 5 epochs (3 times) and got upto 88% accuracy. <br/>
-**Data Cleaning:** The most time consuming part of the project was data cleaning. It was crucial to have clean and relevant dataset to get good accurate predictions. I had to clean up most of the images scraped from duckduckgo and merged it with kaggle's WikiArt dataset so the predictions will be more accurate.<br/>
+**Training:** 
+- Utilized transfer learning with pretrained models
+- Fine-tuned models over 3 cycles of 5 epochs each <br/>
+**Data Cleaning:** The most time consuming part of the project was data cleaning. It was crucial to have clean and relevant dataset to get good accurate predictions. I had to clean up most of the images scraped from duckduckgo and merge it with kaggle's WikiArt dataset so the predictions will be more accurate.<br/>
+
+# Model Comparison 
+| Model   | Architecture | Dataset Size | Accuracy |
+|----------|--------------|---------------|-----------|
+| Model 1  | ResNet34     | 16,000 images | **88%**   |
+| Model 2  | ResNet50     | 16,000 images | **90%**   |
+
+ResNet50 achieved higher accuracy due to its deeper architecture and improved feature extraction capabilities.
+
 
 # Model Deployment
 The model was deployed in HuggingFace Spaces Gradio App. The implementation can be found in `deployment` folder or [here](https://huggingface.co/spaces/goldphish2209/art2artist-recognizer). <br/>
