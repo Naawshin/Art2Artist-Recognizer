@@ -19,6 +19,12 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
         }
 
         /* Navigation Bar */
@@ -316,6 +322,62 @@
             line-height: 1.6;
         }
 
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 3rem 4%;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .footer-content h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-info {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .footer-info p {
+            margin: 0.4rem 0;
+            font-size: 0.95rem;
+        }
+
+        .footer-info a {
+            color: #667eea;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-info a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: #333;
+            margin: 1.5rem 0;
+        }
+
+        .footer-credit {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
         /* Responsive */
         @media (max-width: 1200px) {
             .artists-grid {
@@ -349,7 +411,7 @@
                 font-size: 0.9rem;
             }
 
-            .hero-section, .stats-section, .artists-section, .bottom-cta {
+            .hero-section, .stats-section, .artists-section, .bottom-cta, footer {
                 padding-left: 2%;
                 padding-right: 2%;
             }
@@ -401,6 +463,14 @@
             .artist-category {
                 padding: 1.5rem;
             }
+
+            footer {
+                padding: 2rem 2%;
+            }
+
+            .footer-content h3 {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -422,5 +492,19 @@
     <main>
         {{ content }}
     </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>About the Creator</h3>
+            <div class="footer-info">
+                <p><strong>Nowshin Tabasum</strong></p>
+                <p>Email: <a href="mailto:nawshintabassum88@gmail.com">nawshintabassum88@gmail.com</a></p>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/nowshin-tabasum/" target="_blank">linkedin.com/in/nowshin-tabasum</a></p>
+            </div>
+            <div class="footer-divider"></div>
+            <p class="footer-credit">&copy; 2024 Art2Artist Recognizer. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
