@@ -44,8 +44,8 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
             label = gr.Label(label="Prediction")
     
     gr.Examples(
-        examples=['test_images/download (1).jpeg', 'test_images/download (2).jpeg',
-                 'test_images/download (3).jpeg', 'test_images/download (4).jpeg'],
+        examples=['test_images/unknown (1).jpeg', 'test_images/unknown (2).jpeg',
+                 'test_images/unknown (3).jpeg', 'test_images/unknown (4).jpeg'],
         inputs=image
     )
     
