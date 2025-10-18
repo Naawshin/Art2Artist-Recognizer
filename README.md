@@ -57,13 +57,13 @@ The model was deployed in HuggingFace Spaces Gradio App. The implementation can 
 
 # API integration with GitHub Pages
 The deployed model API is integrated [here](https://naawshin.github.io/Art2Artist-Recognizer/) in GitHub Pages Website. Implementation and other details can be found in `docs` folder.
-figure>
-  <img src="image.png" width="700" alt="Art2Artist Recognizer Web Interface">
+<figure>
+  <img src="images/image.png" width="700" alt="Art2Artist Recognizer Web Interface">
   <figcaption><b>Figure 1:</b> Model integrated on GitHub Pages Homepage Interface</figcaption>
 </figure>
 
 <figure>
-  <img src="image-1.png" width="700" alt="Art2Artist Recognizer APP Interface">
+  <img src="images/image-1.png" width="700" alt="Art2Artist Recognizer App Interface">
   <figcaption><b>Figure 2:</b> Art2Artist Recognizer App Interface</figcaption>
 </figure>
 
