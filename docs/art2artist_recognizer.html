@@ -86,18 +86,24 @@ layout: default
         box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
     }
 
-    .preview-section {
+    .content-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
         display: none;
+    }
+
+    .content-wrapper.active {
+        display: grid;
+    }
+
+    .preview-section {
         background: white;
         border-radius: 20px;
         padding: 2rem;
-        margin-bottom: 2rem;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         text-align: center;
-    }
-
-    .preview-section.active {
-        display: block;
     }
 
     .preview-section h3 {
@@ -115,27 +121,26 @@ layout: default
     }
 
     .results-section {
-        display: none;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border-radius: 20px;
         padding: 3rem;
         text-align: center;
         color: white;
         box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
-    }
-
-    .results-section.active {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .results-section h2 {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
         font-weight: 900;
+        opacity: 0.95;
     }
 
     .artist-name {
-        font-size: 2.8rem;
+        font-size: 2.5rem;
         font-weight: 900;
         margin: 1rem 0;
         letter-spacing: -0.5px;
@@ -206,6 +211,7 @@ layout: default
         gap: 1rem;
         justify-content: center;
         margin-top: 2rem;
+        flex-wrap: wrap;
     }
 
     .btn {
@@ -239,6 +245,16 @@ layout: default
         background: #f5f9ff;
     }
 
+    @media (max-width: 1024px) {
+        .content-wrapper {
+            grid-template-columns: 1fr;
+        }
+
+        .results-section {
+            padding: 2rem;
+        }
+    }
+
     @media (max-width: 768px) {
         .app-container {
             padding: 2rem 1rem;
@@ -260,12 +276,12 @@ layout: default
             font-size: 2rem;
         }
 
-        .results-section {
-            padding: 2rem 1.5rem;
-        }
-
         .button-group {
             flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
         }
     }
 </style>
@@ -289,23 +305,26 @@ layout: default
         <p>Analyzing artwork...</p>
     </div>
 
-    <div class="preview-section" id="previewSection">
-        <h3>Selected Image</h3>
-        <div id="preview"></div>
+    <div class="content-wrapper" id="contentWrapper">
+        <div class="preview-section" id="previewSection">
+            <h3>Selected Image</h3>
+            <div id="preview"></div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h2>Recognized Artist</h2>
+            <div class="artist-name" id="artistName"></div>
+            <div class="confidence-bar">
+                <div class="confidence-fill" id="confidenceFill"></div>
+            </div>
+            <div class="confidence-label">
+                Confidence: <span class="confidence-percentage" id="confidencePercentage">0%</span>
+            </div>
+        </div>
     </div>
 
-    <div class="results-section" id="resultsSection">
-        <h2>Recognized Artist</h2>
-        <div class="artist-name" id="artistName"></div>
-        <div class="confidence-bar">
-            <div class="confidence-fill" id="confidenceFill"></div>
-        </div>
-        <div class="confidence-label">
-            Confidence: <span class="confidence-percentage" id="confidencePercentage">0%</span>
-        </div>
-        <div class="button-group">
-            <button class="btn btn-primary" onclick="uploadAnother()">Try Another Image</button>
-        </div>
+    <div class="button-group" id="buttonGroup" style="display: none;">
+        <button class="btn btn-primary" onclick="uploadAnother()">Try Another Image</button>
     </div>
 </div>
 
@@ -314,25 +333,28 @@ layout: default
     
     const photoInput = document.getElementById('photo');
     const preview = document.getElementById('preview');
-    const previewSection = document.getElementById('previewSection');
+    const contentWrapper = document.getElementById('contentWrapper');
     const loadingSection = document.getElementById('loadingSection');
-    const resultsSection = document.getElementById('resultsSection');
     const uploadArea = document.getElementById('uploadArea');
+    const buttonGroup = document.getElementById('buttonGroup');
 
     function showSection(section) {
-        previewSection.classList.remove('active');
+        contentWrapper.classList.remove('active');
         loadingSection.classList.remove('active');
-        resultsSection.classList.remove('active');
         uploadArea.style.display = 'block';
+        buttonGroup.style.display = 'none';
         
         if (section === 'preview') {
-            previewSection.classList.add('active');
+            contentWrapper.classList.add('active');
+            uploadArea.style.display = 'none';
+            buttonGroup.style.display = 'flex';
         } else if (section === 'loading') {
             loadingSection.classList.add('active');
             uploadArea.style.display = 'none';
         } else if (section === 'results') {
-            resultsSection.classList.add('active');
+            contentWrapper.classList.add('active');
             uploadArea.style.display = 'none';
+            buttonGroup.style.display = 'flex';
         }
     }
 
