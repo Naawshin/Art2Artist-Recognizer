@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art2Artist Recognizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --cream: #fdf6ec;
+    --dark: #1a1208;
+    --dark-mid: #2e2010;
+    --glass: rgba(10, 6, 2, 0.55);
+    --glass-light: rgba(253, 246, 236, 0.08);
+    --transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    color: var(--cream);
+    background: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('bg.png');
+    background-size: cover;
+    background-position: center 30%;
+    filter: brightness(0.55) saturate(1.2);
+    transform: scale(1.05);
+    animation: slowZoom 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes slowZoom {
+    from { transform: scale(1.05); }
+    to   { transform: scale(1.12); }
+  }
+
+  .hero-veil {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(10,6,2,0.15) 0%,
+      rgba(10,6,2,0.4) 60%,
+      rgba(10,6,2,0.85) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    animation: fadeUp 1.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 1.2rem;
+    animation: fadeUp 1.4s 0.2s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5rem;
+    animation: fadeUp 1.4s 0.35s ease both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-sub {
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(253,246,236,0.65);
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1.4s 0.5s ease both;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    animation: fadeUp 1.4s 0.65s ease both;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(253,246,236,0.5);
+  }
+
+  .divider-line {
+    width: 1px;
+    height: 40px;
+    background: rgba(201,168,76,0.35);
+    align-self: center;
+  }
+
+  .cta-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 1.4s 0.8s ease both;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(201,168,76,0.5);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    transform: translateY(-2px);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(253,246,236,0.4);
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    animation: fadeUp 2s 1.2s ease both;
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.5));
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  /* ── ARTISTS GRID ── */
+  .section {
+    padding: 7rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .section-body {
+    font-size: 0.85rem;
+    line-height: 1.9;
+    color: rgba(253,246,236,0.6);
+    max-width: 580px;
+    margin-bottom: 3rem;
+  }
+
+  .era-block {
+    margin-bottom: 3rem;
+  }
+
+  .era-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.5);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .artists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .artist-card {
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(201,168,76,0.12);
+    background: var(--glass-light);
+    backdrop-filter: blur(4px);
+    transition: var(--transition);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .artist-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.4s ease;
+  }
+
+  .artist-card:hover {
+    border-color: rgba(201,168,76,0.35);
+    background: rgba(201,168,76,0.06);
+    transform: translateY(-2px);
+  }
+
+  .artist-card:hover::before {
+    transform: scaleY(1);
+  }
+
+  .artist-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.2;
+  }
+
+  .artist-dates {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: rgba(201,168,76,0.5);
+    margin-top: 0.3rem;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-section {
+    background: rgba(201,168,76,0.04);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    padding: 6rem 2rem;
+  }
+
+  .how-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: rgba(201,168,76,0.2);
+    line-height: 1;
+  }
+
+  .step-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+
+  .step-desc {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: rgba(253,246,236,0.55);
+  }
+
+  /* ── TRY SECTION ── */
+  .try-section {
+    padding: 7rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .upload-area {
+    position: relative;
+    margin: 3rem auto 0;
+    max-width: 600px;
+    border: 1px dashed rgba(201,168,76,0.3);
+    padding: 3rem 2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    background: var(--glass-light);
+  }
+
+  .upload-area:hover, .upload-area.drag-over {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.06);
+  }
+
+  .upload-icon {
+    font-size: 2.5rem;
+    color: rgba(201,168,76,0.4);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .upload-title {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .upload-sub {
+    font-size: 0.7rem;
+    color: rgba(253,246,236,0.4);
+    margin-bottom: 1.5rem;
+  }
+
+  #file-input { display: none; }
+
+  .preview-img {
+    display: none;
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    margin: 0 auto 1.5rem;
+  }
+
+  .result-area {
+    display: none;
+    margin-top: 2rem;
+    padding: 1.5rem 2rem;
+    border: 1px solid rgba(201,168,76,0.25);
+    background: rgba(201,168,76,0.05);
+    text-align: left;
+  }
+
+  .result-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .result-artist {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .result-conf {
+    font-size: 0.7rem;
+    color: rgba(253,246,236,0.5);
+  }
+
+  .confidence-bar-wrap {
+    margin-top: 1rem;
+    height: 2px;
+    background: rgba(255,255,255,0.08);
+    width: 100%;
+  }
+
+  .confidence-bar {
+    height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  .loading-text {
+    display: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 1.5rem;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .error-text {
+    display: none;
+    font-size: 0.75rem;
+    color: #e87a7a;
+    margin-top: 1rem;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.5s ease, backdrop-filter 0.5s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(10,6,2,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--cream);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(253,246,236,0.6);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: rgba(201,168,76,0.5);
+    margin-bottom: 1rem;
+  }
+
+  .footer-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: rgba(253,246,236,0.3);
+  }
+
+  .footer-text a {
+    color: rgba(201,168,76,0.5);
+    text-decoration: none;
+  }
+
+  .footer-text a:hover { color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hero-stats { gap: 1.5rem; }
+    .stat-number { font-size: 1.5rem; }
+  }
+
+  /* Contact links */
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: rgba(253,246,236,0.55);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+  }
+  .contact-link:last-child { border-bottom: none; padding-bottom: 0; }
+  .contact-link:hover { color: var(--gold-light); }
+  .contact-link svg { flex-shrink: 0; color: var(--gold); opacity: 0.7; }
+  .contact-link:hover svg { opacity: 1; }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Art<span>2</span>Artist</a>
+  <ul class="nav-links">
+    <li><a href="#artists">Artists</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#try">Try it</a></li>
+    <li><a href="https://huggingface.co/spaces/goldphish2209/art2artist-recognizer" target="_blank">Launch app ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-veil"></div>
+  <div class="hero-content">
+    <p class="eyebrow">Deep learning · Art history · Computer vision</p>
+    <h1>Art<em>2</em>Artist<br>Recognizer</h1>
+    <p class="hero-sub">Identify the master behind any painting</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-number">20</span>
+        <span class="stat-label">Master artists</span>
+      </div>
+      <div class="divider-line"></div>
+      <div class="stat">
+        <span class="stat-number">16k+</span>
+        <span class="stat-label">Artworks trained</span>
+      </div>
+      <div class="divider-line"></div>
+      <div class="stat">
+        <span class="stat-number">5+</span>
+        <span class="stat-label">Centuries covered</span>
+      </div>
+    </div>
+    <div class="cta-group">
+      <a href="#try" class="btn btn-primary">Recognize a painting</a>
+      <a href="#artists" class="btn btn-outline">Browse artists</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Discover</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ARTISTS -->
+<section id="artists" style="background: var(--dark-mid);">
+  <div class="section reveal">
+    <p class="section-label">The collection</p>
+    <h2 class="section-title">Twenty <em>masters</em>,<br>five centuries of genius</h2>
+    <p class="section-body">
+      From the Renaissance giants who redefined human expression to the Abstract Expressionists who shattered convention — Art2Artist spans the full arc of Western art history.
+    </p>
+
+    <div class="era-block">
+      <p class="era-title">Italian Renaissance & Baroque · 15th–17th century</p>
+      <div class="artists-grid">
+        <div class="artist-card"><p class="artist-name">Leonardo da Vinci</p><p class="artist-dates">1452–1519</p></div>
+        <div class="artist-card"><p class="artist-name">Michelangelo</p><p class="artist-dates">1475–1564</p></div>
+        <div class="artist-card"><p class="artist-name">Raphael</p><p class="artist-dates">1483–1520</p></div>
+        <div class="artist-card"><p class="artist-name">Caravaggio</p><p class="artist-dates">1571–1610</p></div>
+        <div class="artist-card"><p class="artist-name">Rembrandt van Rijn</p><p class="artist-dates">1606–1669</p></div>
+      </div>
+    </div>
+
+    <div class="era-block">
+      <p class="era-title">Post-Impressionism & Symbolism · Late 19th century</p>
+      <div class="artists-grid">
+        <div class="artist-card"><p class="artist-name">Edvard Munch</p><p class="artist-dates">1863–1944</p></div>
+        <div class="artist-card"><p class="artist-name">Vincent van Gogh</p><p class="artist-dates">1853–1890</p></div>
+        <div class="artist-card"><p class="artist-name">Gustav Klimt</p><p class="artist-dates">1862–1918</p></div>
+        <div class="artist-card"><p class="artist-name">Paul Cézanne</p><p class="artist-dates">1839–1906</p></div>
+      </div>
+    </div>
+
+    <div class="era-block">
+      <p class="era-title">Impressionism · 19th century</p>
+      <div class="artists-grid">
+        <div class="artist-card"><p class="artist-name">Claude Monet</p><p class="artist-dates">1840–1926</p></div>
+        <div class="artist-card"><p class="artist-name">Edgar Degas</p><p class="artist-dates">1834–1917</p></div>
+        <div class="artist-card"><p class="artist-name">Pierre-Auguste Renoir</p><p class="artist-dates">1841–1919</p></div>
+      </div>
+    </div>
+
+    <div class="era-block">
+      <p class="era-title">Modern & 20th century</p>
+      <div class="artists-grid">
+        <div class="artist-card"><p class="artist-name">Pablo Picasso</p><p class="artist-dates">1881–1973</p></div>
+        <div class="artist-card"><p class="artist-name">Henri Matisse</p><p class="artist-dates">1869–1954</p></div>
+        <div class="artist-card"><p class="artist-name">Salvador Dalí</p><p class="artist-dates">1904–1989</p></div>
+        <div class="artist-card"><p class="artist-name">Joan Miró</p><p class="artist-dates">1893–1983</p></div>
+        <div class="artist-card"><p class="artist-name">Frida Kahlo</p><p class="artist-dates">1907–1954</p></div>
+        <div class="artist-card"><p class="artist-name">Diego Rivera</p><p class="artist-dates">1886–1957</p></div>
+        <div class="artist-card"><p class="artist-name">Jackson Pollock</p><p class="artist-dates">1912–1956</p></div>
+        <div class="artist-card"><p class="artist-name">Mark Rothko</p><p class="artist-dates">1903–1970</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="how-section">
+  <div class="how-inner reveal">
+    <p class="section-label">The method</p>
+    <h2 class="section-title">How it <em>works</em></h2>
+    <div class="steps-grid">
+      <div class="step">
+        <span class="step-num">01</span>
+        <p class="step-title">Upload your artwork</p>
+        <p class="step-desc">Provide any painting — photograph it, screenshot it, or use a URL. The model accepts JPEG, PNG and WebP formats.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <p class="step-title">Visual analysis</p>
+        <p class="step-desc">A deep learning model trained on 16,000+ artworks analyzes brushwork, palette, composition, and stylistic signatures.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <p class="step-title">Artist attribution</p>
+        <p class="step-desc">The model returns a ranked prediction across all 20 artists, with confidence scores reflecting its certainty.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <p class="step-title">Explore & learn</p>
+        <p class="step-desc">Discover the story behind the master, their era, and what makes their visual language instantly recognizable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRY IT -->
+<section id="try">
+  <div class="try-section reveal">
+    <p class="section-label">Live demo</p>
+    <h2 class="section-title">Try it <em>yourself</em></h2>
+    <p class="section-body" style="margin: 0 auto 0;">
+      Upload any painting below and let the model reveal the master behind the canvas.
+    </p>
+
+    <div class="upload-area" id="upload-area">
+      <img id="preview-img" class="preview-img" alt="Preview">
+      <span class="upload-icon">✦</span>
+      <p class="upload-title">Drop a painting here</p>
+      <p class="upload-sub">or click to choose a file</p>
+      <label class="btn btn-outline" style="cursor:pointer; display:inline-flex; font-size:0.65rem;">
+        Choose file
+        <input type="file" id="file-input" accept="image/*">
+      </label>
+    </div>
+
+    <p class="loading-text" id="loading-text">Analysing brushwork &amp; palette…</p>
+    <p class="error-text" id="error-text"></p>
+
+    <div class="result-area" id="result-area">
+      <p class="result-label">Attributed to</p>
+      <p class="result-artist" id="result-artist"></p>
+      <p class="result-conf" id="result-conf"></p>
+      <div class="confidence-bar-wrap"><div class="confidence-bar" id="conf-bar"></div></div>
+    </div>
+
+    <div style="margin-top:3rem; text-align:center;">
+      <p style="font-size:0.65rem; letter-spacing:0.15em; color:rgba(253,246,236,0.35); text-transform:uppercase; margin-bottom:1.5rem;">
+        Or open the full Gradio app
+      </p>
+      <a href="https://huggingface.co/spaces/goldphish2209/art2artist-recognizer" target="_blank" class="btn btn-primary">
+        Launch on Hugging Face ↗
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / CONTACT -->
+<section style="background: var(--dark-mid); border-top: 1px solid rgba(201,168,76,0.1);">
+  <div class="section reveal" style="display: flex; flex-wrap: wrap; gap: 4rem; align-items: flex-start;">
+    <div style="flex: 1; min-width: 220px;">
+      <p class="section-label"></p>
+      <h2 class="section-title" style="font-size: clamp(1.6rem, 4vw, 2.8rem); margin-bottom: 1rem;">Built by <em>Nowshin Tabasum</em></h2>
+      <p class="section-body" style="margin-bottom: 0;">
+        A passion project at the intersection of deep learning and art history — training a model to see what the eye learns over a lifetime of looking at paintings.
+      </p>
+    </div>
+    <div style="flex: 1; min-width: 220px; padding-top: 0.5rem;">
+      <p class="section-label" style="margin-bottom: 1.5rem;">Get in touch</p>
+      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <a href="https://github.com/Naawshin" target="_blank" class="contact-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <span>github.com/Naawshin</span>
+        </a>
+        <a href="mailto:nowshintabasum004@gmail.com" class="contact-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>nowshintabasum004@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/nowshin-tabasum" target="_blank" class="contact-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          <span>linkedin.com/in/nowshin-tabasum</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo">Art2Artist</p>
+  <p class="footer-text">
+    © 2025 Naawshin · Powered by <a href="https://huggingface.co/spaces/goldphish2209/art2artist-recognizer" target="_blank">Gradio on Hugging Face</a>
+  </p>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => io.observe(r));
+
+  // Upload & predict
+  const area = document.getElementById('upload-area');
+  const fileInput = document.getElementById('file-input');
+  const preview = document.getElementById('preview-img');
+  const loadingText = document.getElementById('loading-text');
+  const errorText = document.getElementById('error-text');
+  const resultArea = document.getElementById('result-area');
+  const resultArtist = document.getElementById('result-artist');
+  const resultConf = document.getElementById('result-conf');
+  const confBar = document.getElementById('conf-bar');
+
+  area.addEventListener('dragover', e => { e.preventDefault(); area.classList.add('drag-over'); });
+  area.addEventListener('dragleave', () => area.classList.remove('drag-over'));
+  area.addEventListener('drop', e => {
+    e.preventDefault();
+    area.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) processFile(file);
+  });
+  area.addEventListener('click', e => {
+    if (e.target !== fileInput && !e.target.closest('label')) fileInput.click();
+  });
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) processFile(fileInput.files[0]);
+  });
+
+  async function processFile(file) {
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = ev => {
+      preview.src = ev.target.result;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+
+    // Hide results, show loader
+    resultArea.style.display = 'none';
+    errorText.style.display = 'none';
+    loadingText.style.display = 'block';
+    area.querySelector('.upload-icon').style.display = 'none';
+    area.querySelector('.upload-title').style.display = 'none';
+    area.querySelector('.upload-sub').style.display = 'none';
+
+    try {
+      // Upload to Gradio via REST API
+      const formData = new FormData();
+      formData.append('files', file);
+
+      const uploadRes = await fetch('https://goldphish2209-art2artist-recognizer.hf.space/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!uploadRes.ok) throw new Error('Upload failed');
+      const uploaded = await uploadRes.json();
+      const filePath = uploaded[0];
+
+      // Predict
+      const predictRes = await fetch('https://goldphish2209-art2artist-recognizer.hf.space/run/recognize_img', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: [{ path: filePath }] })
+      });
+
+      if (!predictRes.ok) throw new Error('Prediction failed');
+      const result = await predictRes.json();
+
+      loadingText.style.display = 'none';
+      showResult(result.data);
+    } catch (err) {
+      loadingText.style.display = 'none';
+      errorText.textContent = 'Could not reach the model. Try opening the full app on Hugging Face.';
+      errorText.style.display = 'block';
+    }
+  }
+
+  function showResult(data) {
+    // data[0] is typically a label or dict from the model
+    let artist = 'Unknown';
+    let confidence = null;
+
+    if (Array.isArray(data) && data.length > 0) {
+      const raw = data[0];
+      if (typeof raw === 'string') {
+        artist = raw;
+      } else if (raw && typeof raw === 'object') {
+        // Handle various Gradio output shapes
+        if (raw.label) artist = raw.label;
+        else if (raw.artist) artist = raw.artist;
+        else artist = JSON.stringify(raw);
+        if (raw.confidences && raw.confidences.length > 0) {
+          confidence = Math.round(raw.confidences[0].confidence * 100);
+        }
+      }
+    }
+
+    resultArtist.textContent = artist;
+    if (confidence !== null) {
+      resultConf.textContent = `Confidence: ${confidence}%`;
+      setTimeout(() => { confBar.style.width = confidence + '%'; }, 100);
+    } else {
+      resultConf.textContent = '';
+      confBar.style.width = '0%';
+    }
+    resultArea.style.display = 'block';
+    resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
+</body>
+</html>

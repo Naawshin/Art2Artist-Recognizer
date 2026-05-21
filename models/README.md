@@ -2,4 +2,4 @@ Get trained and exported models here: https://drive.google.com/drive/folders/1pH
 
 Files ending with `.pkl` are exported files <br>
 
-`art-recognizer-v2.pkl` is the current deployed model.
+`art-recognizer-v6.pkl` is the current deployed model.
