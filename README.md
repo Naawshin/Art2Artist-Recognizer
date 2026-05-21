@@ -1,6 +1,7 @@
 # Art2Artist-Recognizer
 An end to end image classifier covering data collections, cleaning, model training, deployment, and API integration. <br/>
 It can classify 20 famous artists based on their artworks. <br/>
+![alt text](image.png)
 The artists are: <br/>
 1. Caravaggio
 2. Claude Monet
