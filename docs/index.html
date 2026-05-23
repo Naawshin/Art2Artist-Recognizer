@@ -84,7 +84,7 @@
 
   .eyebrow {
     font-size: 0.7rem;
-    letter-spacing: 0.35em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--gold-light);
     margin-bottom: 1.2rem;
@@ -97,7 +97,7 @@
     font-weight: 300;
     line-height: 1.0;
     letter-spacing: -0.01em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
     animation: fadeUp 1.4s 0.35s ease both;
   }
 
@@ -216,7 +216,7 @@
   }
 
   .scroll-arrow {
-    width: 1px;
+    width: 2px;
     height: 40px;
     background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.5));
     animation: scrollPulse 2s ease-in-out infinite;
@@ -475,6 +475,54 @@
     background: var(--gold);
     width: 0%;
     transition: width 1.2s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  /* Top predictions list */
+  .top-predictions {
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding-top: 1rem;
+  }
+
+  .top-predictions-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.5);
+    margin-bottom: 0.75rem;
+  }
+
+  .prediction-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prediction-name {
+    font-size: 0.72rem;
+    color: rgba(253,246,236,0.7);
+    min-width: 160px;
+  }
+
+  .prediction-bar-wrap {
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+    position: relative;
+  }
+
+  .prediction-bar-fill {
+    height: 100%;
+    background: rgba(201,168,76,0.4);
+    transition: width 1s ease;
+  }
+
+  .prediction-pct {
+    font-size: 0.62rem;
+    color: rgba(201,168,76,0.6);
+    min-width: 36px;
+    text-align: right;
   }
 
   .loading-text {
@@ -754,10 +802,10 @@
 
     <div class="upload-area" id="upload-area">
       <img id="preview-img" class="preview-img" alt="Preview">
-      <span class="upload-icon">✦</span>
-      <p class="upload-title">Drop a painting here</p>
-      <p class="upload-sub">or click to choose a file</p>
-      <label class="btn btn-outline" style="cursor:pointer; display:inline-flex; font-size:0.65rem;">
+      <span class="upload-icon" id="upload-icon">✦</span>
+      <p class="upload-title" id="upload-title">Drop a painting here</p>
+      <p class="upload-sub" id="upload-sub">or click to choose a file</p>
+      <label class="btn btn-outline" style="cursor:pointer; display:inline-flex; font-size:0.65rem;" id="upload-label">
         Choose file
         <input type="file" id="file-input" accept="image/*">
       </label>
@@ -771,6 +819,10 @@
       <p class="result-artist" id="result-artist"></p>
       <p class="result-conf" id="result-conf"></p>
       <div class="confidence-bar-wrap"><div class="confidence-bar" id="conf-bar"></div></div>
+      <div class="top-predictions" id="top-predictions" style="display:none;">
+        <p class="top-predictions-label">All predictions</p>
+        <div id="predictions-list"></div>
+      </div>
     </div>
 
     <div style="margin-top:3rem; text-align:center;">
@@ -822,7 +874,10 @@
   </p>
 </footer>
 
-<script>
+<!-- Gradio JS Client (official, mirrors what the Python client does) -->
+<script type="module">
+  import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
+
   // Nav scroll
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
@@ -836,17 +891,20 @@
   }, { threshold: 0.1 });
   reveals.forEach(r => io.observe(r));
 
-  // Upload & predict
-  const area = document.getElementById('upload-area');
-  const fileInput = document.getElementById('file-input');
-  const preview = document.getElementById('preview-img');
-  const loadingText = document.getElementById('loading-text');
-  const errorText = document.getElementById('error-text');
+  // DOM refs
+  const area       = document.getElementById('upload-area');
+  const fileInput  = document.getElementById('file-input');
+  const preview    = document.getElementById('preview-img');
+  const loadingTxt = document.getElementById('loading-text');
+  const errorTxt   = document.getElementById('error-text');
   const resultArea = document.getElementById('result-area');
   const resultArtist = document.getElementById('result-artist');
-  const resultConf = document.getElementById('result-conf');
-  const confBar = document.getElementById('conf-bar');
+  const resultConf   = document.getElementById('result-conf');
+  const confBar      = document.getElementById('conf-bar');
+  const topPredDiv   = document.getElementById('top-predictions');
+  const predList     = document.getElementById('predictions-list');
 
+  // Upload interactions
   area.addEventListener('dragover', e => { e.preventDefault(); area.classList.add('drag-over'); });
   area.addEventListener('dragleave', () => area.classList.remove('drag-over'));
   area.addEventListener('drop', e => {
@@ -862,6 +920,13 @@
     if (fileInput.files[0]) processFile(fileInput.files[0]);
   });
 
+  function hideUploadPrompt() {
+    document.getElementById('upload-icon').style.display = 'none';
+    document.getElementById('upload-title').style.display = 'none';
+    document.getElementById('upload-sub').style.display = 'none';
+    document.getElementById('upload-label').style.display = 'none';
+  }
+
   async function processFile(file) {
     // Show preview
     const reader = new FileReader();
@@ -871,68 +936,58 @@
     };
     reader.readAsDataURL(file);
 
-    // Hide results, show loader
+    // Reset UI
     resultArea.style.display = 'none';
-    errorText.style.display = 'none';
-    loadingText.style.display = 'block';
-    area.querySelector('.upload-icon').style.display = 'none';
-    area.querySelector('.upload-title').style.display = 'none';
-    area.querySelector('.upload-sub').style.display = 'none';
+    errorTxt.style.display = 'none';
+    loadingTxt.style.display = 'block';
+    hideUploadPrompt();
 
     try {
-      // Upload to Gradio via REST API
-      const formData = new FormData();
-      formData.append('files', file);
+      // Connect to the Gradio Space using the official JS client
+      // This mirrors exactly what the Python client does:
+      //   client = Client("goldphish2209/art2artist-recognizer")
+      //   result = client.predict(image=handle_file(...), api_name="/recognize_img")
+      const client = await Client.connect("goldphish2209/art2artist-recognizer");
 
-      const uploadRes = await fetch('https://goldphish2209-art2artist-recognizer.hf.space/upload', {
-        method: 'POST',
-        body: formData
+      const result = await client.predict("/recognize_img", {
+        image: file   // The JS client handles upload automatically, just like handle_file()
       });
 
-      if (!uploadRes.ok) throw new Error('Upload failed');
-      const uploaded = await uploadRes.json();
-      const filePath = uploaded[0];
-
-      // Predict
-      const predictRes = await fetch('https://goldphish2209-art2artist-recognizer.hf.space/run/recognize_img', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data: [{ path: filePath }] })
-      });
-
-      if (!predictRes.ok) throw new Error('Prediction failed');
-      const result = await predictRes.json();
-
-      loadingText.style.display = 'none';
+      loadingTxt.style.display = 'none';
       showResult(result.data);
+
     } catch (err) {
-      loadingText.style.display = 'none';
-      errorText.textContent = 'Could not reach the model. Try opening the full app on Hugging Face.';
-      errorText.style.display = 'block';
+      console.error("Gradio error:", err);
+      loadingTxt.style.display = 'none';
+      errorTxt.textContent = 'Could not reach the model — the Space may be sleeping. Try the full app on Hugging Face.';
+      errorTxt.style.display = 'block';
     }
   }
 
   function showResult(data) {
-    // data[0] is typically a label or dict from the model
+    // Gradio label outputs look like:
+    // { label: "Van Gogh", confidences: [{ label: "Van Gogh", confidence: 0.97 }, ...] }
+    // Or the raw data array may be [labelObj] or just a string.
     let artist = 'Unknown';
     let confidence = null;
+    let allPredictions = [];
 
-    if (Array.isArray(data) && data.length > 0) {
-      const raw = data[0];
-      if (typeof raw === 'string') {
-        artist = raw;
-      } else if (raw && typeof raw === 'object') {
-        // Handle various Gradio output shapes
-        if (raw.label) artist = raw.label;
-        else if (raw.artist) artist = raw.artist;
-        else artist = JSON.stringify(raw);
-        if (raw.confidences && raw.confidences.length > 0) {
-          confidence = Math.round(raw.confidences[0].confidence * 100);
+    const raw = Array.isArray(data) ? data[0] : data;
+
+    if (typeof raw === 'string') {
+      artist = raw;
+    } else if (raw && typeof raw === 'object') {
+      artist = raw.label || raw.artist || 'Unknown';
+      if (raw.confidences && Array.isArray(raw.confidences)) {
+        allPredictions = raw.confidences;
+        if (allPredictions.length > 0) {
+          confidence = Math.round(allPredictions[0].confidence * 100);
         }
       }
     }
 
     resultArtist.textContent = artist;
+
     if (confidence !== null) {
       resultConf.textContent = `Confidence: ${confidence}%`;
       setTimeout(() => { confBar.style.width = confidence + '%'; }, 100);
@@ -940,6 +995,34 @@
       resultConf.textContent = '';
       confBar.style.width = '0%';
     }
+
+    // Show ranked list of all predictions if available
+    if (allPredictions.length > 1) {
+      predList.innerHTML = '';
+      allPredictions.slice(0, 5).forEach(p => {
+        const pct = Math.round(p.confidence * 100);
+        const row = document.createElement('div');
+        row.className = 'prediction-row';
+        row.innerHTML = `
+          <span class="prediction-name">${p.label}</span>
+          <div class="prediction-bar-wrap">
+            <div class="prediction-bar-fill" style="width:0%" data-pct="${pct}"></div>
+          </div>
+          <span class="prediction-pct">${pct}%</span>
+        `;
+        predList.appendChild(row);
+      });
+      topPredDiv.style.display = 'block';
+      // Animate bars
+      setTimeout(() => {
+        predList.querySelectorAll('.prediction-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.pct + '%';
+        });
+      }, 200);
+    } else {
+      topPredDiv.style.display = 'none';
+    }
+
     resultArea.style.display = 'block';
     resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
