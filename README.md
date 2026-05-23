@@ -1,77 +1,130 @@
-# Art2Artist-Recognizer
-An end to end image classifier covering data collections, cleaning, model training, deployment, and API integration. <br/>
-It can classify 20 famous artists based on their artworks. <br/>
-![alt text](image.png)
-The artists are: <br/>
-1. Caravaggio
-2. Claude Monet
-3. Diego Rivera
-4. Edgar Degas
-5. Edvard Munch
-6. Frida Kahlo
-7. Gustav Klimt
-8. Henri Matisse
-9. Jackson Pollock
-10. Joan Miró
-11. Leonardo da Vinci
-12. Mark Rothko
-13. Michelangelo
-14. Pablo Picasso
-15. Paul Cézanne
-16. Pierre-Auguste
-17. Raphael
-18. Rembrandt van Rijn
-19. Salvador Dalí
-20. Vincent van Gogh
+# 🎨 Art2Artist Recognizer
 
-# Dataset Preparation
-**Data Collection:** Downloaded from DuckDuckGo using term name and [kaggle WikiArt dataset](https://www.kaggle.com/datasets/steubk/wikiart). 
-- Original dataset size: ~20,000 images  
-- After cleaning: ~16,000 high-quality images
+> An end-to-end deep learning image classifier that identifies the master behind any painting — spanning data collection, cleaning, model training, deployment, and API integration.
 
-**DataLoader:** Used fastai DataBlock API to set up the DataLoader. <br/>
-**Data Augmentation:** fastai provides default data augmentation which operates in GPU which includes Random resized crops (min_scale=0.5), multiple augmentations with 2.0 multiplier. <br/>
-Details can be found in `notebooks/data_prep.ipynb`
+<p align="center">
+  <img src="images/image.png" alt="Art2Artist Recognizer App Interface"/>
+  <br/>
+  <em>Art2Artist Recognizer — Web Interface</em>
+</p>
 
-# Training and Data Cleaning
-**Training:** 
-- Utilized transfer learning with pretrained models
-- Fine-tuned models over 3 cycles of 5 epochs each
-
-**Data Cleaning:** The most time consuming part of the project was data cleaning. It was crucial to have clean and relevant dataset to get good accurate predictions. I had to clean up most of the images scraped from duckduckgo and merge it with kaggle's WikiArt dataset so the predictions will be more accurate.<br/>
-
-# Model Comparison 
-| Model   | Architecture | Dataset Size | Accuracy |
-|----------|--------------|---------------|-----------|
-| Model 1  | ResNet34     | 16,000 images | **88%**   |
-| Model 2  | ResNet50     | 16,000 images | **90%**   |
-
-ResNet50 achieved higher accuracy due to its deeper architecture and improved feature extraction capabilities.
+<p align="center">
+  <a href="https://huggingface.co/spaces/goldphish2209/art2artist-recognizer">
+    <img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Live%20Demo-FFD21E?style=for-the-badge" alt="Hugging Face"/>
+  </a>
+  <a href="https://naawshin.github.io/Art2Artist-Recognizer/">
+    <img src="https://img.shields.io/badge/GitHub%20Pages-Website-222222?style=for-the-badge&logo=github" alt="GitHub Pages"/>
+  </a>
+  <img src="https://img.shields.io/badge/Accuracy-90%25-4CAF50?style=for-the-badge" alt="Accuracy"/>
+  <img src="https://img.shields.io/badge/Artists-20-blueviolet?style=for-the-badge" alt="Artists"/>
+</p>
 
 
-# Model Deployment
-The model was deployed in HuggingFace Spaces Gradio App. The implementation can be found in `deployment` folder or [here](https://huggingface.co/spaces/goldphish2209/art2artist-recognizer). <br/>
-<figure>
-  <img src="deployment/gradio_app.png" width="700" height="350">
-  <figcaption><b>Figure 1:</b> Gradio App Interface of the Deployed Model</figcaption>
-</figure>
+## 📦 Dataset Preparation
 
-# API integration with GitHub Pages
-The deployed model API is integrated [here](https://naawshin.github.io/Art2Artist-Recognizer/) in GitHub Pages Website. Implementation and other details can be found in `docs` folder.
-<figure>
-  <img src="images/image.png" width="700" alt="Art2Artist Recognizer Web Interface">
-  <figcaption><b>Figure 2:</b> Model integrated on GitHub Pages Homepage Interface</figcaption>
-</figure>
+**Data Collection** was sourced from two places:
+- **DuckDuckGo** — images scraped by artist name
+- **[Kaggle WikiArt Dataset](https://www.kaggle.com/datasets/steubk/wikiart)** — curated art repository
 
-<figure>
-  <img src="images/image-1.png" width="700" alt="Art2Artist Recognizer App Interface">
-  <figcaption><b>Figure 3:</b> Art2Artist Recognizer App Interface</figcaption>
-</figure>
+| Stage | Image Count |
+|---|---|
+| Raw collected | ~20,000 |
+| After cleaning | ~16,000 |
 
-# Summary
-- Built using **fastai** and **PyTorch**
-- Implemented **transfer learning** with ResNet34 and ResNet50
-- Curated and cleaned **20k+ images** from DuckDuckGo and Kaggle WikiArt
-- Achieved up to **90% accuracy** in artist classification
-- Deployed on **Hugging Face Spaces** with **Gradio**
-- Integrated via API on **GitHub Pages** for web-based access
+**DataLoader** — Built with the [fastai DataBlock API](https://docs.fast.ai/data.block.html).
+
+**Data Augmentation** — fastai's default GPU-accelerated augmentation pipeline:
+- Random resized crops (`min_scale=0.5`)
+- Multiple augmentations with `2.0` multiplier
+
+> See `notebooks/data_prep.ipynb` for full details.
+
+---
+
+## 🏋️ Training & Data Cleaning
+
+### Training
+
+- Transfer learning with pretrained ResNet architectures
+- Fine-tuned over **3 cycles × 5 epochs each**
+
+### Data Cleaning
+
+The most time-consuming phase of the project. Images scraped from DuckDuckGo required extensive manual review and cleaning before being merged with the WikiArt dataset to produce high-quality, relevant training examples.
+
+---
+
+## 📊 Model Comparison
+
+| Model | Architecture | Dataset Size | Accuracy |
+|---|---|---|---|
+| Model 1 | ResNet34 | 16,000 images | 88% |
+| Model 2 | ResNet50 | 16,000 images | **90%** ✅ |
+
+**ResNet50** was selected as the final model — its deeper architecture enables richer feature extraction, capturing the subtle stylistic signatures that distinguish each artist.
+
+---
+
+## 🚀 Deployment
+
+The model is deployed as a **Gradio app on Hugging Face Spaces**.
+
+<p align="center">
+  <img src="deployment/gradio_app.png" alt="Gradio App Interface" width="700"/>
+  <br/>
+  <em>Gradio App — Deployed on Hugging Face Spaces</em>
+</p>
+
+🔗 **Live app:** [huggingface.co/spaces/goldphish2209/art2artist-recognizer](https://huggingface.co/spaces/goldphish2209/art2artist-recognizer)
+
+> Implementation details in the `deployment/` folder.
+
+---
+
+## 🌐 API Integration (GitHub Pages)
+
+The Gradio model API is integrated into a GitHub Pages website for browser-based access without any local setup.
+
+<p align="center">
+  <img src="images/image-1.png" alt="GitHub Pages Website" width="700"/>
+  <br/>
+  <em>Art2Artist — GitHub Pages Live Demo</em>
+</p>
+
+🔗 **Website:** [naawshin.github.io/Art2Artist-Recognizer](https://naawshin.github.io/Art2Artist-Recognizer/)
+
+> Implementation details in the `docs/` folder.
+
+---
+
+## 🛠️ Tech Stack
+
+| Component | Technology |
+|---|---|
+| Deep learning framework | fastai + PyTorch |
+| Model architectures | ResNet34, ResNet50 |
+| Data sources | DuckDuckGo scraping, Kaggle WikiArt |
+| Deployment | Hugging Face Spaces + Gradio |
+| Web integration | GitHub Pages |
+| Training strategy | Transfer learning + fine-tuning |
+
+---
+
+## ✨ Summary
+
+- 🧠 Built with **fastai** and **PyTorch**
+- 🔁 **Transfer learning** with ResNet34 and ResNet50
+- 🖼️ Curated and cleaned **20k+ images** from DuckDuckGo and Kaggle WikiArt
+- 🎯 Achieved up to **90% accuracy** in artist classification
+- ☁️ Deployed on **Hugging Face Spaces** with Gradio
+- 🌐 Integrated via API on **GitHub Pages** for web-based access
+
+---
+
+## 👩‍💻 Author
+
+**Nowshin Tabasum** — AI Engineer
+
+[![GitHub](https://img.shields.io/badge/GitHub-Naawshin-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Naawshin)
+[![Email](https://img.shields.io/badge/Email-nowshintabasum004@gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:nowshintabasum004@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-nowshin--tabasum-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nowshin-tabasum)
